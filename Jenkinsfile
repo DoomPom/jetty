@@ -80,6 +80,11 @@ pipeline {
       }
     }
   }
+  post {
+    failure {
+      slackSend(color: 'danger', message: "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}")
+    }
+  }
 }
 
 /**
