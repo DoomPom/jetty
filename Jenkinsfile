@@ -1,4 +1,5 @@
 #!groovy
+def COLOR_MAP = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
 
 pipeline {
   agent any
@@ -89,6 +90,10 @@ pipeline {
     }
     unstable {
       slackNotif()
+    } fixed {
+      slackNotif()
+    } changed {
+      slackNotif()
     }
   }
 }
@@ -98,7 +103,7 @@ def slackNotif() {
     BUILD_USER = currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
   }
   slackSend channel: '#jenkins',
-            color: 'danger',
+            color: COLOR_MAP[currentBuild.currentResult],
             message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${BUILD_USER}\n More info at: ${env.BUILD_URL}"
 }
 
