@@ -90,9 +90,11 @@ pipeline {
     }
     unstable {
       slackNotif()
-    } fixed {
+    }
+    fixed {
       slackNotif()
-    } changed {
+    }
+    changed {
       slackNotif()
     }
   }
