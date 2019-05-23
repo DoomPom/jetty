@@ -82,9 +82,19 @@ pipeline {
   }
   post {
     failure {
-      slackSend(color: 'danger', message: "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}")
+      slackNotif()
+    }
+    regression {
+      slackNotif()
+    }
+    unstable {
+      slackNotif()
     }
   }
+}
+
+def slackNotif(){
+  slackSend(channel: '#jenkins', color: 'danger', message: "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}")
 }
 
 /**
