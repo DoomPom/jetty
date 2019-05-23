@@ -93,8 +93,13 @@ pipeline {
   }
 }
 
-def slackNotif(){
-  slackSend(channel: '#jenkins', color: 'danger', message: "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}")
+def slackNotif() {
+  script {
+    BUILD_USER = currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
+  }
+  slackSend channel: '#jenkins',
+            color: 'danger',
+            message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${BUILD_USER}\n More info at: ${env.BUILD_URL}"
 }
 
 /**
