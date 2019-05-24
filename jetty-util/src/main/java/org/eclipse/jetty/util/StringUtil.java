@@ -491,7 +491,7 @@ public class StringUtil
      */
     public static boolean isEmpty(String str)
     {
-        return str == null || destr.isEmpty();
+        return str == null || str.isEmpty();
     }
 
     /* ------------------------------------------------------------ */
